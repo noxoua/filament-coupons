@@ -40,7 +40,7 @@ class CreateStrategyCommand extends Command
 
         if (! file_exists(config_path('filament-coupons.php'))) {
             $this->callSilently('vendor:publish', [
-                '--tag' => CouponsServiceProvider::$name.'-config',
+                '--tag' => CouponsServiceProvider::$name . '-config',
             ]);
         }
 

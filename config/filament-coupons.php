@@ -5,7 +5,6 @@ return [
         \Noxo\FilamentCoupons\Resources\CouponResource::class,
     ],
 
-
     /*
     |--------------------------------------------------------------------------
     | Coupon Strategies
