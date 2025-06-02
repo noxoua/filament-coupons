@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Coupons;
+
+use Filament\Forms;
+use Noxo\FilamentCoupons\Strategies\CouponStrategy;
+
+class {{ strategyClass }} extends CouponStrategy
+{
+    public function getLabel(): string
+    {
+        return '{{ strategyLabel }}';
+    }
+
+    public function schema(): array
+    {
+        return [
+            Forms\Components\Section::make()
+                ->heading($this->getLabel() . ' Details')
+                ->compact()
+                ->schema([
+                    // define the schema for the strategy form.
+                ]),
+        ];
+    }
+
+    public function apply(Coupon $coupon): bool
+    {
+        // here you would implement the logic to apply the coupon.
+
+        // Consume the coupon after applying it.
+        return coupons()->consume($coupon, couponable: auth()->user());
+    }
+}
