@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property-read int $id
  * @property-read string $code
- * @property-read string $type
+ * @property-read string $strategy
  * @property-read array|null $payload
  * @property-read \Carbon\Carbon|null $starts_at
  * @property-read \Carbon\Carbon|null $expires_at

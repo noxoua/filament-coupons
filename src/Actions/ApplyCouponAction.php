@@ -21,19 +21,19 @@ class ApplyCouponAction extends Action
     {
         parent::setUp();
 
-        $this->label('Apply Coupon');
+        $this->label(__('filament-coupons::filament-coupons.action.label'));
         $this->modalWidth(MaxWidth::Medium);
         $this->successNotification(
             Notification::make()
-                ->title('Coupon Applied')
-                ->body('Your coupon has been successfully applied!')
+                ->title(__('filament-coupons::filament-coupons.action.notifications.success.title'))
+                ->body(__('filament-coupons::filament-coupons.action.notifications.success.body'))
                 ->success()
         );
 
         $this->form(fn () => [
             Forms\Components\TextInput::make('code')
-                ->label('Coupon Code')
-                ->placeholder('Enter your coupon code')
+                ->label(__('filament-coupons::filament-coupons.action.form.code.label'))
+                ->placeholder(__('filament-coupons::filament-coupons.action.form.code.placeholder'))
                 ->required()
                 ->maxLength(20),
         ]);
@@ -45,8 +45,8 @@ class ApplyCouponAction extends Action
 
             if (! $coupon || ! coupons()->isValid($coupon)) {
                 $this->error(
-                    title: 'Invalid Coupon',
-                    body: 'The coupon code you entered is either invalid or has expired.'
+                    title: __('filament-coupons::filament-coupons.action.notifications.invalid.title'),
+                    body: __('filament-coupons::filament-coupons.action.notifications.invalid.body')
                 );
                 $this->halt();
 
@@ -59,14 +59,14 @@ class ApplyCouponAction extends Action
                 $this->success();
             } catch (CouponException $e) {
                 $this->error(
-                    title: 'Coupon Error',
+                    title: __('filament-coupons::filament-coupons.action.notifications.error.title'),
                     body: $e->getMessage()
                 );
             } catch (Throwable $e) {
                 report($e);
                 $this->error(
-                    title: 'An error occurred',
-                    body: 'Something went wrong while applying the coupon. Please try again later.'
+                    title: __('filament-coupons::filament-coupons.action.notifications.error.title'),
+                    body: __('filament-coupons::filament-coupons.action.notifications.error.body')
                 );
             }
         });

@@ -5,6 +5,7 @@ namespace Noxo\FilamentCoupons\Resources\CouponResource\RelationManagers;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class UsagesRelationManager extends RelationManager
 {
@@ -15,22 +16,29 @@ class UsagesRelationManager extends RelationManager
         return false;
     }
 
+    public static function getTitle(Model $ownerRecord, string $pageClass): string
+    {
+        return __('filament-coupons::filament-coupons.resource.usages');
+    }
+
     public function table(Table $table): Table
     {
         return $table
             ->recordTitleAttribute('id')
             ->defaultSort('id', 'desc')
+            ->modelLabel(__('filament-coupons::filament-coupons.resource.usage'))
+            ->pluralModelLabel(__('filament-coupons::filament-coupons.resource.usages'))
             ->columns([
                 Tables\Columns\TextColumn::make('id')
                     ->label('ID')
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('couponable.' . config('filament-coupons.couponable_column', 'name'))
-                    ->label('Used By')
+                Tables\Columns\TextColumn::make('couponable.'.config('filament-coupons.couponable_column', 'name'))
+                    ->label(__('filament-coupons::filament-coupons.resource.table.columns.used_by'))
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Used At')
+                    ->label(__('filament-coupons::filament-coupons.resource.table.columns.used_at'))
                     ->date()
                     ->dateTimeTooltip()
                     ->sortable(),

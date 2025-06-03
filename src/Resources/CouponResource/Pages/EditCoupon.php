@@ -24,6 +24,6 @@ class EditCoupon extends EditRecord
 
     public function getContentTabLabel(): ?string
     {
-        return 'Details';
+        return __('filament-coupons::filament-coupons.resource.form.details');
     }
 }

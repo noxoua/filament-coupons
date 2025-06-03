@@ -24,6 +24,6 @@ class ViewCoupon extends ViewRecord
 
     public function getContentTabLabel(): ?string
     {
-        return 'Details';
+        return __('filament-coupons::filament-coupons.resource.form.details');
     }
 }
