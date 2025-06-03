@@ -20,7 +20,7 @@ final class Coupons
     {
         $couponStrategy = $this->getStrategy($strategyName);
 
-        return $couponStrategy->schema() ?? [];
+        return $couponStrategy?->schema() ?? [];
     }
 
     /**
@@ -31,7 +31,7 @@ final class Coupons
         return filled($this->getStrategyPayloadSchema($strategyName));
     }
 
-    public function getStrategy(string $strategyName): ?CouponStrategy
+    public function getStrategy(?string $strategyName = null): ?CouponStrategy
     {
         $couponStrategy = $this->getStrategies()[$strategyName] ?? null;
 
