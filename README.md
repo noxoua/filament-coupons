@@ -10,37 +10,19 @@
 
 # Filament Coupons
 
-A powerful and flexible coupon management system for Filament 3.x. This package provides a complete solution for creating, managing, and applying coupons with customizable strategies, usage tracking, and comprehensive validation.
-
-## Features
-
--   🎫 **Flexible Coupon Management** - Create and manage coupons with codes, expiration dates, and usage limits
--   🎯 **Strategy Pattern** - Implement custom coupon strategies for different discount types
--   📊 **Usage Tracking** - Track coupon usage with polymorphic relationships
--   ⏰ **Time-based Validation** - Support for start and expiration dates
--   🔢 **Usage Limits** - Set maximum usage limits per coupon
--   🎨 **Filament Integration** - Beautiful admin interface with Filament resources
--   🔧 **Extensible** - Easy to extend with custom strategies and validation rules
+A flexible coupon management system for Filament 3.x with customizable strategies and usage tracking.
 
 ## Installation
 
-You can install the package via composer:
-
 ```bash
 composer require noxoua/filament-coupons
-```
 
-Then run the installation command:
-
-```bash
 php artisan filament-coupons:install
 ```
 
 ## Setup
 
-### Add the Plugin to your Panel
-
-Add the `CouponsPlugin` to your Filament panel:
+Add the plugin to your Filament panel:
 
 ```php
 use Noxo\FilamentCoupons\CouponsPlugin;
@@ -48,7 +30,6 @@ use Noxo\FilamentCoupons\CouponsPlugin;
 public function panel(Panel $panel): Panel
 {
     return $panel
-        // ...
         ->plugins([
             CouponsPlugin::make(),
         ]);
@@ -57,130 +38,150 @@ public function panel(Panel $panel): Panel
 
 ## Usage
 
-### Creating Coupon Strategies
+### Creating Strategies
 
-The package uses a strategy pattern to handle different types of coupons. You need to create strategies using the provided Artisan command:
+Create custom coupon strategies:
 
 ```bash
 php artisan make:coupons-strategy FreeSubscription
 ```
 
-This will create a new strategy class in `app/Coupons/FreeSubscriptionStrategy.php`:
+Register in config:
+
+```php
+// config/filament-coupons.php
+'strategies' => [
+    \App\Coupons\FreeSubscriptionStrategy::class,
+],
+```
+
+### Strategy Example
 
 ```php
 class FreeSubscriptionStrategy extends CouponStrategy
 {
-    public function getLabel(): string
-    {
-        return 'Free Subscription';
-    }
-
     public function schema(): array
     {
         return [
-            Forms\Components\Section::make()
-                ->heading($this->getLabel() . ' Details')
-                ->compact()
-                ->schema([
-                    Forms\Components\TextInput::make('months')
-                        ->label('Free Months')
-                        ->numeric()
-                        ->required()
-                        ->default(1),
-                ]),
+            Forms\Components\TextInput::make('days')
+                ->label('Days')
+                ->numeric()
+                ->required(),
         ];
     }
 
     public function apply(Coupon $coupon): bool
     {
         $user = auth()->user();
-        $months = $coupon->payload['months'] ?? 1;
+        $days = $coupon->payload['days'] ?? 7;
 
-        // Your business logic here
-        $user->subscription()->extend($months);
+        // Your business logic
+        $user->extendSubscription($days);
 
-        // Consume the coupon after applying it
+        // Configure notifications and redirects
+        $this->successNotification(
+            fn ($notification) => $notification
+                ->title('Coupon Applied!')
+                ->body("You got {$days} free days")
+        );
+
+        $this->successRedirectUrl('/dashboard');
+
+        // Consume coupon
         return coupons()->consume($coupon, couponable: $user);
     }
 }
 ```
 
-If you need to reject the coupon during its application, throw a `CouponException` as shown:
+**Available methods for strategies:**
 
-```php
-use Noxo\FilamentCoupons\Exceptions\CouponException;
+-   Custom notifications
+    -   `successNotification`
+    -   `failureNotification`
+-   Custom redirects
+    -   `successRedirectUrl`
+    -   `failureRedirectUrl`
 
-public function apply(Coupon $coupon): bool
-{
-    $user = auth()->user();
-    $months = $coupon->payload['months'] ?? 1;
+### Using the Action
 
-    if ($user->isAdmin()) {
-        throw new CouponException('This coupon is not applicable for you!');
-    }
+The package provides a ready-to-use `ApplyCouponAction` that can be integrated anywhere in your Filament application:
 
-    // Your business logic here
-    $user->subscription()->extend($months);
-
-    // Consume the coupon after applying it
-    return coupons()->consume($coupon, couponable: $user);
-}
-```
-
-### Registering Strategies
-
-After creating a strategy, register it in the config file:
-
-```php
-// config/filament-coupons.php
-return [
-    'strategies' => [
-        \App\Coupons\FreeSubscriptionStrategy::class,
-        // Add more strategies here
-    ],
-];
-```
-
-### Using Filament Action
-
-The package includes a pre-built Filament Action that handles coupon application. The action automatically performs all necessary validations and gracefully handles `CouponException` errors. You can use this standard Filament action anywhere in your application.
+**In Livewire Components:**
 
 ```php
 use Noxo\FilamentCoupons\Actions\ApplyCouponAction;
 
-ApplyCouponAction::make(),
+class Dashboard extends Component implements HasActions
+{
+    use InteractsWithActions;
+
+    public function applyCouponAction(): Action
+    {
+        return ApplyCouponAction::make()
+            ->button()
+            ->label('Apply Coupon');
+    }
+
+    public function render()
+    {
+        return view('dashboard');
+    }
+}
 ```
 
-### Using the Coupons Service
+```blade
+{{-- dashboard.blade.php --}}
+<div>
+    <h2>Dashboard</h2>
+    {{ $this->applyCouponAction }}
+</div>
+```
 
-The package provides a convenient service for working with coupons:
+**In Resource Pages:**
 
 ```php
-use Noxo\FilamentCoupons\Models\Coupon;
+use Noxo\FilamentCoupons\Actions\ApplyCouponAction;
 
+class ListPosts extends ListRecords
+{
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\CreateAction::make(),
+            ApplyCouponAction::make(),
+        ];
+    }
+}
+```
+
+**In Custom Pages:**
+
+```php
+use Noxo\FilamentCoupons\Actions\ApplyCouponAction;
+
+class SettingsPage extends Page
+{
+    protected function getHeaderActions(): array
+    {
+        return [
+            ApplyCouponAction::make()
+                ->label('Redeem Coupon')
+                ->color('success'),
+        ];
+    }
+}
+```
+
+### Manual Using
+
+```php
 $coupon = Coupon::where('code', 'WELCOME2012')->first();
 
-// Check if a coupon is valid
+// Validate
 if (coupons()->isValid($coupon)) {
-    // Apply the coupon
+    // Apply
     coupons()->applyCoupon($coupon);
 }
-
-// Check specific conditions
-if (coupons()->isActive($coupon)) {
-    // Coupon is active and within date range
-}
-
-if (coupons()->canConsume($coupon)) {
-    // Coupon hasn't reached usage limit
-}
-
-// Manually consume a coupon
-coupons()->consume(
-    coupon: $coupon,
-    couponable: auth()->user(),
-    meta: ['order_id' => 123]
-);
 ```
 
 ## Testing
@@ -188,20 +189,8 @@ coupons()->consume(
 **TODO: add tests**
 
 ```bash
-composer test
+# composer test
 ```
-
-## Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
 
 ## Credits
 

@@ -1,6 +1,6 @@
 {
     "name": "noxoua/filament-coupons",
-    "description": "Flexible coupon management system for Filament 3.x",
+    "description": "A flexible coupon management system for Filament",
     "keywords": [
         "filament",
         "laravel",
