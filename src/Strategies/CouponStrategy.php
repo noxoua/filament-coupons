@@ -4,23 +4,29 @@ declare(strict_types=1);
 
 namespace Noxo\FilamentCoupons\Strategies;
 
-use Filament\Forms\Form;
-use Illuminate\Support\Str;
 use Noxo\FilamentCoupons\Models\Coupon;
 
-abstract class CouponStrategy
+class CouponStrategy
 {
-    abstract public function getLabel(): string;
+    public function getLabel(): string
+    {
+        return (string) str($this->getName())
+            ->replace('_', ' ')
+            ->title();
+    }
 
-    abstract public function apply(Coupon $coupon): bool;
+    public function apply(Coupon $coupon): bool
+    {
+        return true;
+    }
 
     /**
      * This name is utilized to store
      * and reference the strategy in the database.
      */
-    final public function getName(): string
+    public function getName(): string
     {
-        return (string) Str::of(static::class)
+        return (string) str(static::class)
             ->afterLast('\\')
             ->snake()
             ->before('_strategy');
@@ -29,7 +35,7 @@ abstract class CouponStrategy
     /**
      * Payload schema for the strategy.
      */
-    final public function schema(): array
+    public function schema(): array
     {
         return [
             // Define the schema for the strategy form.

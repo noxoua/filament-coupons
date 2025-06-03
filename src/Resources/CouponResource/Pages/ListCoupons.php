@@ -8,7 +8,7 @@ use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Noxo\FilamentCoupons\Resources\CouponResource;
 
-final class ListCoupons extends ListRecords
+class ListCoupons extends ListRecords
 {
     protected static string $resource = CouponResource::class;
 

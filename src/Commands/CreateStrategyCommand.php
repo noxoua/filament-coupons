@@ -30,15 +30,15 @@ final class CreateStrategyCommand extends Command
             ->studly()
             ->beforeLast('Strategy');
 
+        $strategy .= 'Strategy';
         $strategyPath = app_path("Coupons/{$strategy}.php");
 
         $this->copyStubToApp('Strategy', $strategyPath, [
             'strategyClass' => $strategy,
-            'strategyLabel' => str($strategy)->headline()->toString(),
         ]);
 
         $this->components->info("Coupon strategy [{$strategyPath}] created successfully.");
-        $this->components->info("Don't forget to register it in the config [app/config/filament-coupons.php] file");
+        $this->components->info("Don't forget to register it in the config [config/filament-coupons.php] file");
 
         if (! file_exists(config_path('filament-coupons.php'))) {
             $this->callSilently('vendor:publish', [

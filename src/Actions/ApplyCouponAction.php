@@ -13,7 +13,7 @@ use Noxo\FilamentCoupons\Exceptions\CouponException;
 use Noxo\FilamentCoupons\Models\Coupon;
 use Throwable;
 
-final class ApplyCouponAction extends Action
+class ApplyCouponAction extends Action
 {
     protected function setUp(): void
     {

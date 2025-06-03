@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read int|null $usage_limit
  * @property-read bool $active
  */
-final class Coupon extends Model
+class Coupon extends Model
 {
     protected $guarded = [];
 

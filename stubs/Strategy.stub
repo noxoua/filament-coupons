@@ -3,15 +3,11 @@
 namespace App\Coupons;
 
 use Filament\Forms;
+use Noxo\FilamentCoupons\Models\Coupon;
 use Noxo\FilamentCoupons\Strategies\CouponStrategy;
 
 class {{ strategyClass }} extends CouponStrategy
 {
-    public function getLabel(): string
-    {
-        return '{{ strategyLabel }}';
-    }
-
     public function schema(): array
     {
         return [
@@ -27,6 +23,8 @@ class {{ strategyClass }} extends CouponStrategy
     public function apply(Coupon $coupon): bool
     {
         // here you would implement the logic to apply the coupon.
+
+        // throw new CouponException('This coupon is not applicable for you!');
 
         // Consume the coupon after applying it.
         return coupons()->consume($coupon, couponable: auth()->user());

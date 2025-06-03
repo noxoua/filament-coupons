@@ -8,7 +8,7 @@ use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Noxo\FilamentCoupons\Resources\CouponResource;
 
-final class EditCoupon extends EditRecord
+class EditCoupon extends EditRecord
 {
     protected static string $resource = CouponResource::class;
 

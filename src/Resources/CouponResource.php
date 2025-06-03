@@ -17,7 +17,7 @@ use Noxo\FilamentCoupons\Models\Coupon;
 use Noxo\FilamentCoupons\Resources\CouponResource\Pages;
 use Noxo\FilamentCoupons\Resources\CouponResource\RelationManagers;
 
-final class CouponResource extends Resource
+class CouponResource extends Resource
 {
     protected static ?string $model = Coupon::class;
 
@@ -67,7 +67,7 @@ final class CouponResource extends Resource
                                     ->afterStateUpdated(fn (Forms\Components\Select $component) => $component
                                         ->getContainer()
                                         ->getComponent('payload')
-                                        ->getChildComponentContainer()
+                                        ?->getChildComponentContainer()
                                         ->fill()),
 
                                 Forms\Components\Group::make()

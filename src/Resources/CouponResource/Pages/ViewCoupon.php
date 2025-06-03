@@ -8,7 +8,7 @@ use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 use Noxo\FilamentCoupons\Resources\CouponResource;
 
-final class ViewCoupon extends ViewRecord
+class ViewCoupon extends ViewRecord
 {
     protected static string $resource = CouponResource::class;
 

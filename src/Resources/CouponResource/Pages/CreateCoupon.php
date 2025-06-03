@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Noxo\FilamentCoupons\Resources\CouponResource;
 
-final class CreateCoupon extends CreateRecord
+class CreateCoupon extends CreateRecord
 {
     protected static string $resource = CouponResource::class;
 
@@ -28,5 +28,10 @@ final class CreateCoupon extends CreateRecord
         }
 
         return $record;
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return static::getResource()::getUrl('index');
     }
 }

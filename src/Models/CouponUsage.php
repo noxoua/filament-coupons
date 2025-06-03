@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property-read array|null $meta
  * @property-read Coupon $coupon
  */
-final class CouponUsage extends Model
+class CouponUsage extends Model
 {
     protected $guarded = [];
 
