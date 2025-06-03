@@ -27,7 +27,7 @@ final class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Noxo\\FilamentCoupons\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'Noxo\\FilamentCoupons\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
     }
 

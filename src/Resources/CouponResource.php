@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Noxo\FilamentCoupons\Resources;
 
 use Filament\Forms;
@@ -15,16 +17,11 @@ use Noxo\FilamentCoupons\Models\Coupon;
 use Noxo\FilamentCoupons\Resources\CouponResource\Pages;
 use Noxo\FilamentCoupons\Resources\CouponResource\RelationManagers;
 
-class CouponResource extends Resource
+final class CouponResource extends Resource
 {
     protected static ?string $model = Coupon::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
-    public function getTitle(): string | Htmlable
-    {
-        return __('filament-coupons::filament-coupons.resource.title');
-    }
 
     public static function getModelLabel(): string
     {
@@ -185,7 +182,7 @@ class CouponResource extends Resource
                     ->formatStateUsing(function ($record, $state) {
                         $limit = $state > 0 ? Number::format($state) : '∞';
 
-                        return Number::format($record->usages_count) . ' / ' . $limit;
+                        return Number::format($record->usages_count).' / '.$limit;
                     }),
 
                 Tables\Columns\ToggleColumn::make('active')
@@ -255,5 +252,10 @@ class CouponResource extends Resource
     {
         return parent::getEloquentQuery()
             ->withCount('usages');
+    }
+
+    public function getTitle(): string|Htmlable
+    {
+        return __('filament-coupons::filament-coupons.resource.title');
     }
 }
