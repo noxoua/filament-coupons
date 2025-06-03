@@ -7,6 +7,13 @@ return [
         Noxo\FilamentCoupons\Resources\CouponResource::class,
     ],
 
+    'navigation' => [
+        'icon' => 'heroicon-o-ticket',
+        'active_icon' => 'heroicon-s-ticket',
+        'sort' => 60,
+        'group' => null,
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Coupon Strategies

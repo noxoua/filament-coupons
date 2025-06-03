@@ -21,8 +21,6 @@ class CouponResource extends Resource
 {
     protected static ?string $model = Coupon::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
     public static function getModelLabel(): string
     {
         return __('filament-coupons::filament-coupons.resource.title');
@@ -31,6 +29,26 @@ class CouponResource extends Resource
     public static function getPluralModelLabel(): string
     {
         return __('filament-coupons::filament-coupons.resource.plural_title');
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return config('filament-coupons.navigation.sort', 60);
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return config('filament-coupons.navigation.group');
+    }
+
+    public static function getNavigationIcon(): string|Htmlable|null
+    {
+        return config('filament-coupons.navigation.icon', 'heroicon-o-ticket');
+    }
+
+    public static function getActiveNavigationIcon(): string|Htmlable|null
+    {
+        return config('filament-coupons.navigation.active_icon', 'heroicon-o-ticket');
     }
 
     public static function form(Form $form): Form
