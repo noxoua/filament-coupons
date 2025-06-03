@@ -1,10 +1,11 @@
 {
     "name": "noxoua/filament-coupons",
-    "description": "This is my package filament-coupons",
+    "description": "Flexible coupon management system for Filament 3.x",
     "keywords": [
-        "noxoua",
+        "filament",
         "laravel",
-        "filament-coupons"
+        "coupons",
+        "filament-plugin"
     ],
     "homepage": "https://github.com/noxoua/filament-coupons",
     "support": {
