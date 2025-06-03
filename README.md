@@ -25,17 +25,10 @@ You can install the package via composer:
 composer require noxoua/filament-coupons
 ```
 
-You can publish and run the migrations with:
+Then run the installation command:
 
 ```bash
-php artisan vendor:publish --tag="filament-coupons-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag="filament-coupons-config"
+php artisan filament-coupons:install
 ```
 
 ## Setup
@@ -61,7 +54,7 @@ public function panel(Panel $panel): Panel
 
 ### Creating Coupon Strategies
 
-The package uses a strategy pattern to handle different types of coupons. You can create custom strategies using the provided Artisan command:
+The package uses a strategy pattern to handle different types of coupons. You need to create strategies using the provided Artisan command:
 
 ```bash
 php artisan make:coupons-strategy FreeSubscription
@@ -70,14 +63,6 @@ php artisan make:coupons-strategy FreeSubscription
 This will create a new strategy class in `app/Coupons/FreeSubscriptionStrategy.php`:
 
 ```php
-<?php
-
-namespace App\Coupons;
-
-use Filament\Forms;
-use Noxo\FilamentCoupons\Models\Coupon;
-use Noxo\FilamentCoupons\Strategies\CouponStrategy;
-
 class FreeSubscriptionStrategy extends CouponStrategy
 {
     public function getLabel(): string
@@ -115,6 +100,28 @@ class FreeSubscriptionStrategy extends CouponStrategy
 }
 ```
 
+If you need to reject the coupon during its application, throw a `CouponException` as shown:
+
+```php
+use Noxo\FilamentCoupons\Exceptions\CouponException;
+
+public function apply(Coupon $coupon): bool
+{
+    $user = auth()->user();
+    $months = $coupon->payload['months'] ?? 1;
+
+    if ($user->isAdmin()) {
+        throw new CouponException('This coupon is not applicable for you!');
+    }
+
+    // Your business logic here
+    $user->subscription()->extend($months);
+
+    // Consume the coupon after applying it
+    return coupons()->consume($coupon, couponable: $user);
+}
+```
+
 ### Registering Strategies
 
 After creating a strategy, register it in the config file:
@@ -127,6 +134,16 @@ return [
         // Add more strategies here
     ],
 ];
+```
+
+### Using Filament Action
+
+The package includes a pre-built Filament Action that handles coupon application. The action automatically performs all necessary validations and gracefully handles `CouponException` errors. You can use this standard Filament action anywhere in your application.
+
+```php
+use Noxo\FilamentCoupons\Actions\ApplyCouponAction;
+
+ApplyCouponAction::make(),
 ```
 
 ### Using the Coupons Service
@@ -162,6 +179,8 @@ coupons()->consume(
 ```
 
 ## Testing
+
+**TODO: add tests**
 
 ```bash
 composer test

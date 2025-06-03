@@ -16,7 +16,6 @@ final class ListCoupons extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
-            \Noxo\FilamentCoupons\Actions\ApplyCouponAction::make(),
         ];
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Noxo\FilamentCoupons\Actions;
 
+use Exception;
 use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Notifications\Notification;
@@ -45,13 +46,15 @@ final class ApplyCouponAction extends Action
                     title: __('filament-coupons::filament-coupons.action.notifications.invalid.title'),
                     body: __('filament-coupons::filament-coupons.action.notifications.invalid.body')
                 );
-                $this->halt();
 
                 return;
             }
 
             try {
-                coupons()->applyCoupon($coupon);
+                $success = coupons()->applyCoupon($coupon);
+                if (! $success) {
+                    throw new Exception;
+                }
 
                 $this->success();
             } catch (CouponException $e) {
