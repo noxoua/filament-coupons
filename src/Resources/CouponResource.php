@@ -21,7 +21,7 @@ class CouponResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public function getTitle(): string|Htmlable
+    public function getTitle(): string | Htmlable
     {
         return __('filament-coupons::filament-coupons.resource.title');
     }
@@ -185,7 +185,7 @@ class CouponResource extends Resource
                     ->formatStateUsing(function ($record, $state) {
                         $limit = $state > 0 ? Number::format($state) : '∞';
 
-                        return Number::format($record->usages_count).' / '.$limit;
+                        return Number::format($record->usages_count) . ' / ' . $limit;
                     }),
 
                 Tables\Columns\ToggleColumn::make('active')

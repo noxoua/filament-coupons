@@ -33,7 +33,7 @@ class UsagesRelationManager extends RelationManager
                     ->label('ID')
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('couponable.'.config('filament-coupons.couponable_column', 'name'))
+                Tables\Columns\TextColumn::make('couponable.' . config('filament-coupons.couponable_column', 'name'))
                     ->label(__('filament-coupons::filament-coupons.resource.table.columns.used_by'))
                     ->sortable(),
 
