@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Noxo\FilamentCoupons\Resources\CouponResource\Pages;
 
 use Filament\Resources\Pages\CreateRecord;
@@ -7,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Noxo\FilamentCoupons\Resources\CouponResource;
 
-class CreateCoupon extends CreateRecord
+final class CreateCoupon extends CreateRecord
 {
     protected static string $resource = CouponResource::class;
 

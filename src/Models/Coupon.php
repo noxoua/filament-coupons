@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Noxo\FilamentCoupons\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read int|null $usage_limit
  * @property-read bool $active
  */
-class Coupon extends Model
+final class Coupon extends Model
 {
     protected $guarded = [];
 

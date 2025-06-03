@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Noxo\FilamentCoupons;
 
 use Illuminate\Filesystem\Filesystem;
@@ -8,7 +10,7 @@ use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class CouponsServiceProvider extends PackageServiceProvider
+final class CouponsServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'filament-coupons';
 
@@ -21,7 +23,7 @@ class CouponsServiceProvider extends PackageServiceProvider
          *
          * More info: https://github.com/spatie/laravel-package-tools
          */
-        $package->name(static::$name)
+        $package->name(self::$name)
             ->hasCommands($this->getCommands())
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
@@ -62,7 +64,7 @@ class CouponsServiceProvider extends PackageServiceProvider
             }
         }
 
-        $this->app->singleton(static::$name, fn ($app) => new \Noxo\FilamentCoupons\Coupons);
+        $this->app->singleton(self::$name, fn ($app) => new Coupons);
     }
 
     /**

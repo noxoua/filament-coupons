@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Noxo\FilamentCoupons\Resources\CouponResource\RelationManagers;
 
 use Filament\Resources\RelationManagers\RelationManager;
@@ -7,18 +9,18 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 
-class UsagesRelationManager extends RelationManager
+final class UsagesRelationManager extends RelationManager
 {
     protected static string $relationship = 'usages';
-
-    public function isReadOnly(): bool
-    {
-        return false;
-    }
 
     public static function getTitle(Model $ownerRecord, string $pageClass): string
     {
         return __('filament-coupons::filament-coupons.resource.usages');
+    }
+
+    public function isReadOnly(): bool
+    {
+        return false;
     }
 
     public function table(Table $table): Table

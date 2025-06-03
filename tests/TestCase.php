@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Noxo\FilamentCoupons\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
@@ -18,7 +20,7 @@ use Noxo\FilamentCoupons\CouponsServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 
-class TestCase extends Orchestra
+final class TestCase extends Orchestra
 {
     protected function setUp(): void
     {
@@ -27,6 +29,16 @@ class TestCase extends Orchestra
         Factory::guessFactoryNamesUsing(
             fn (string $modelName) => 'Noxo\\FilamentCoupons\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
+    }
+
+    public function getEnvironmentSetUp($app)
+    {
+        config()->set('database.default', 'testing');
+
+        /*
+        $migration = include __DIR__.'/../database/migrations/create_filament-coupons_table.php.stub';
+        $migration->up();
+        */
     }
 
     protected function getPackageProviders($app)
@@ -46,15 +58,5 @@ class TestCase extends Orchestra
             WidgetsServiceProvider::class,
             CouponsServiceProvider::class,
         ];
-    }
-
-    public function getEnvironmentSetUp($app)
-    {
-        config()->set('database.default', 'testing');
-
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_filament-coupons_table.php.stub';
-        $migration->up();
-        */
     }
 }

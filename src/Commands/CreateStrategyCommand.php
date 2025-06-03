@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Noxo\FilamentCoupons\Commands;
 
 use Filament\Support\Commands\Concerns\CanManipulateFiles;
@@ -10,7 +12,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use function Laravel\Prompts\text;
 
 #[AsCommand(name: 'make:coupons-strategy')]
-class CreateStrategyCommand extends Command
+final class CreateStrategyCommand extends Command
 {
     use CanManipulateFiles;
 

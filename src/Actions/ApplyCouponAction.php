@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Noxo\FilamentCoupons\Actions;
 
 use Filament\Actions\Action;
@@ -10,13 +12,8 @@ use Noxo\FilamentCoupons\Exceptions\CouponException;
 use Noxo\FilamentCoupons\Models\Coupon;
 use Throwable;
 
-class ApplyCouponAction extends Action
+final class ApplyCouponAction extends Action
 {
-    public static function getDefaultName(): ?string
-    {
-        return 'applyCoupon';
-    }
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -70,6 +67,11 @@ class ApplyCouponAction extends Action
                 );
             }
         });
+    }
+
+    public static function getDefaultName(): ?string
+    {
+        return 'applyCoupon';
     }
 
     public function error(string $title, string $body): void

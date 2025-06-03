@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Noxo\FilamentCoupons\Resources\CouponResource\Pages;
 
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Noxo\FilamentCoupons\Resources\CouponResource;
 
-class ListCoupons extends ListRecords
+final class ListCoupons extends ListRecords
 {
     protected static string $resource = CouponResource::class;
 

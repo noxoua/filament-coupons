@@ -1,21 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Noxo\FilamentCoupons\Resources\CouponResource\Pages;
 
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 use Noxo\FilamentCoupons\Resources\CouponResource;
 
-class ViewCoupon extends ViewRecord
+final class ViewCoupon extends ViewRecord
 {
     protected static string $resource = CouponResource::class;
-
-    protected function getHeaderActions(): array
-    {
-        return [
-            Actions\EditAction::make(),
-        ];
-    }
 
     public function hasCombinedRelationManagerTabsWithContent(): bool
     {
@@ -25,5 +20,12 @@ class ViewCoupon extends ViewRecord
     public function getContentTabLabel(): ?string
     {
         return __('filament-coupons::filament-coupons.resource.form.details');
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\EditAction::make(),
+        ];
     }
 }

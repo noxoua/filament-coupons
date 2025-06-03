@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Noxo\FilamentCoupons\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -12,9 +14,9 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property-read string $couponable_type
  * @property-read int $couponable_id
  * @property-read array|null $meta
- * @property-read \Noxo\FilamentCoupons\Models\Coupon $coupon
+ * @property-read Coupon $coupon
  */
-class CouponUsage extends Model
+final class CouponUsage extends Model
 {
     protected $guarded = [];
 

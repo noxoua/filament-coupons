@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Noxo\FilamentCoupons;
 
 use Illuminate\Database\Eloquent\Model;
@@ -7,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Noxo\FilamentCoupons\Models\Coupon;
 use Noxo\FilamentCoupons\Strategies\CouponStrategy;
 
-class Coupons
+final class Coupons
 {
     /**
      * Get the payload schema for a specific coupon strategy.
