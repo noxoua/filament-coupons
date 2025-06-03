@@ -9,7 +9,6 @@ use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Notifications\Notification;
 use Filament\Support\Enums\MaxWidth;
-use Noxo\FilamentCoupons\Exceptions\CouponException;
 use Noxo\FilamentCoupons\Models\Coupon;
 use Throwable;
 
@@ -21,12 +20,6 @@ class ApplyCouponAction extends Action
 
         $this->label(__('filament-coupons::filament-coupons.action.label'));
         $this->modalWidth(MaxWidth::Medium);
-        $this->successNotification(
-            Notification::make()
-                ->title(__('filament-coupons::filament-coupons.action.notifications.success.title'))
-                ->body(__('filament-coupons::filament-coupons.action.notifications.success.body'))
-                ->success()
-        );
 
         $this->form(fn () => [
             Forms\Components\TextInput::make('code')
@@ -43,25 +36,26 @@ class ApplyCouponAction extends Action
 
             if (! $coupon || ! coupons()->isValid($coupon)) {
                 $this->error(
-                    title: __('filament-coupons::filament-coupons.action.notifications.invalid.title'),
-                    body: __('filament-coupons::filament-coupons.action.notifications.invalid.body')
+                    title: __('filament-coupons::filament-coupons.action.notifications.failure.title'),
+                    body: __('filament-coupons::filament-coupons.action.notifications.failure.body')
                 );
 
                 return;
             }
 
             try {
-                $success = coupons()->applyCoupon($coupon);
-                if (! $success) {
-                    throw new Exception;
+                $strategy = coupons()->getStrategy($coupon->strategy);
+
+                if (! $strategy) {
+                    throw new Exception("Invalid coupon strategy: {$coupon->strategy}");
                 }
 
-                $this->success();
-            } catch (CouponException $e) {
-                $this->error(
-                    title: __('filament-coupons::filament-coupons.action.notifications.error.title'),
-                    body: $e->getMessage()
-                );
+                $applied = $strategy->apply($coupon);
+
+                // Pass notification and redirect configurations to this action.
+                $strategy->passToAction($this);
+
+                $applied ? $this->success() : $this->failure();
             } catch (Throwable $e) {
                 report($e);
                 $this->error(

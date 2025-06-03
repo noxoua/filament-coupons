@@ -16,7 +16,7 @@ return [
                 'title' => 'Gutschein angewendet',
                 'body' => 'Ihr Gutschein wurde erfolgreich angewendet!',
             ],
-            'invalid' => [
+            'failure' => [
                 'title' => 'Ungültiger Gutschein',
                 'body' => 'Der von Ihnen eingegebene Gutscheincode ist entweder ungültig oder abgelaufen.',
             ],

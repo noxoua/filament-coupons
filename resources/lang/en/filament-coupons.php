@@ -16,7 +16,7 @@ return [
                 'title' => 'Coupon Applied',
                 'body' => 'Your coupon has been successfully applied!',
             ],
-            'invalid' => [
+            'failure' => [
                 'title' => 'Invalid Coupon',
                 'body' => 'The coupon code you entered is either invalid or has expired.',
             ],

@@ -16,7 +16,7 @@ return [
                 'title' => 'Cupom Aplicado',
                 'body' => 'Seu cupom foi aplicado com sucesso!',
             ],
-            'invalid' => [
+            'failure' => [
                 'title' => 'Cupom Inválido',
                 'body' => 'O código do cupom que você digitou é inválido ou expirou.',
             ],

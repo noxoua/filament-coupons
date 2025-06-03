@@ -3,11 +3,19 @@
 namespace App\Coupons;
 
 use Filament\Forms;
+use Filament\Notifications\Notification;
 use Noxo\FilamentCoupons\Models\Coupon;
 use Noxo\FilamentCoupons\Strategies\CouponStrategy;
 
 class {{ strategyClass }} extends CouponStrategy
 {
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        // $this->successRedirectUrl('/welcome');
+    }
+
     public function schema(): array
     {
         return [
@@ -16,17 +24,36 @@ class {{ strategyClass }} extends CouponStrategy
                 ->compact()
                 ->schema([
                     // define the schema for the strategy form.
+                    // Forms\Components\TextInput::make('days'),
                 ]),
         ];
     }
 
     public function apply(Coupon $coupon): bool
     {
-        // here you would implement the logic to apply the coupon.
+        $user = auth()->user();
 
-        // throw new CouponException('This coupon is not applicable for you!');
+        // ... here you would implement the logic to apply the coupon.
+
+        // if ($user->hasSubscription) {
+        //     $this->failureNotification(
+        //         fn (Notification $notification) => $notification
+        //             ->title('You already have active subscription')
+        //             ->body('To apply this coupon toy need to cancel your subscription.')
+        //     );
+        //     return false;
+        // }
+
+        //
+
+        // $days = $coupon->payload['days'];
+        // $this->successNotification(
+        //     fn (Notification $notification) => $notification
+        //         ->title('Coupon applied')
+        //         ->body("Now you have free subscription for {$days} days.")
+        // );
 
         // Consume the coupon after applying it.
-        return coupons()->consume($coupon, couponable: auth()->user());
+        return coupons()->consume($coupon, couponable: $user);
     }
 }

@@ -18,13 +18,9 @@ final class Coupons
      */
     public function getStrategyPayloadSchema(?string $strategyName = null): array
     {
-        $couponStrategy = $this->getStrategies()[$strategyName] ?? null;
+        $couponStrategy = $this->getStrategy($strategyName);
 
-        if (! $couponStrategy) {
-            return [];
-        }
-
-        return $couponStrategy->schema();
+        return $couponStrategy->schema() ?? [];
     }
 
     /**
@@ -33,6 +29,13 @@ final class Coupons
     public function hasStrategyPayloadSchema(?string $strategyName = null): bool
     {
         return filled($this->getStrategyPayloadSchema($strategyName));
+    }
+
+    public function getStrategy(string $strategyName): ?CouponStrategy
+    {
+        $couponStrategy = $this->getStrategies()[$strategyName] ?? null;
+
+        return $couponStrategy;
     }
 
     /**
@@ -58,13 +61,13 @@ final class Coupons
      */
     public function applyCoupon(Coupon $coupon): bool
     {
-        $couponStrategy = $this->getStrategies()[$coupon->strategy] ?? null;
+        $strategy = $this->getStrategy($coupon->strategy);
 
-        if (! $couponStrategy) {
+        if (! $strategy) {
             return false;
         }
 
-        return $couponStrategy->apply($coupon);
+        return $strategy->apply($coupon);
     }
 
     /**

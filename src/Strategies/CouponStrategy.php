@@ -4,10 +4,34 @@ declare(strict_types=1);
 
 namespace Noxo\FilamentCoupons\Strategies;
 
+use Filament\Notifications\Notification;
+use Noxo\FilamentCoupons\Concerns\CanNotifyAndRedirect;
 use Noxo\FilamentCoupons\Models\Coupon;
 
 class CouponStrategy
 {
+    use CanNotifyAndRedirect;
+
+    public function __construct()
+    {
+        $this->setUp();
+    }
+
+    public function setUp(): void
+    {
+        $this->successNotification(
+            fn (Notification $notification) => $notification
+                ->title(__('filament-coupons::filament-coupons.action.notifications.success.title'))
+                ->body(__('filament-coupons::filament-coupons.action.notifications.success.body'))
+        );
+
+        $this->failureNotification(
+            fn (Notification $notification) => $notification
+                ->title(__('filament-coupons::filament-coupons.action.notifications.failure.title'))
+                ->body(__('filament-coupons::filament-coupons.action.notifications.failure.body'))
+        );
+    }
+
     public function getLabel(): string
     {
         return (string) str($this->getName())
