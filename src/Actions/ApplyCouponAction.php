@@ -69,7 +69,7 @@ final class ApplyCouponAction extends Action
         });
     }
 
-    public static function getDefaultName(): ?string
+    public static function getDefaultName(): string
     {
         return 'applyCoupon';
     }

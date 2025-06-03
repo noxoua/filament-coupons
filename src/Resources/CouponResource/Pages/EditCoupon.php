@@ -17,7 +17,7 @@ final class EditCoupon extends EditRecord
         return true;
     }
 
-    public function getContentTabLabel(): ?string
+    public function getContentTabLabel(): string
     {
         return __('filament-coupons::filament-coupons.resource.form.details');
     }

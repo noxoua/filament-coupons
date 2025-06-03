@@ -18,7 +18,7 @@ final class CreateCoupon extends CreateRecord
      */
     protected function handleRecordCreation(array $data): Model
     {
-        $number = $data['number_of_coupons'];
+        $number = max(1, (int) ($data['number_of_coupons'] ?? 1));
         $generateCode = $number > 1;
         unset($data['number_of_coupons']);
 

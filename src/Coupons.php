@@ -125,6 +125,7 @@ final class Coupons
 
         return DB::transaction(function () use ($coupon, $couponable, $meta, $deactiveIfLimitReached) {
             // Create new usage instance without persisting
+            /** @var Models\CouponUsage $usage */
             $usage = $coupon->usages()->make(['meta' => $meta]);
 
             // Associate couponable if provided

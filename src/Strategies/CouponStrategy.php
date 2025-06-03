@@ -20,7 +20,7 @@ abstract class CouponStrategy
      */
     final public function getName(): string
     {
-        return Str::of(static::class)
+        return (string) Str::of(static::class)
             ->afterLast('\\')
             ->snake()
             ->before('_strategy');
