@@ -39,7 +39,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Noxo\\FilamentCoupons\\": "src/"
+            "Noxo\\FilamentCoupons\\": "src/",
+            "Noxo\\FilamentCoupons\\Database\\Factories\\": "database/factories/"
         },
         "files": [
             "src/helpers.php"

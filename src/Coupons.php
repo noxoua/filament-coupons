@@ -48,6 +48,7 @@ final class Coupons
         $strategies = config('filament-coupons.strategies', []);
 
         return collect($strategies)
+            ->filter(fn ($strategyClass) => class_exists($strategyClass))
             ->mapWithKeys(function ($strategyClass) {
                 $strategy = new $strategyClass;
 
@@ -93,7 +94,7 @@ final class Coupons
         $now = now();
 
         $startsAtValid = $coupon->starts_at === null || $now->gte($coupon->starts_at);
-        $expiresAtValid = $coupon->expires_at === null || $now->lte($coupon->expires_at);
+        $expiresAtValid = $coupon->expires_at === null || $now->lt($coupon->expires_at);
 
         return $coupon->active && $startsAtValid && $expiresAtValid;
     }

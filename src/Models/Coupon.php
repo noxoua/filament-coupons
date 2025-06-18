@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Noxo\FilamentCoupons\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -19,6 +20,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Coupon extends Model
 {
+    use HasFactory;
+
     protected $guarded = [];
 
     protected $casts = [
@@ -31,5 +34,12 @@ class Coupon extends Model
     public function usages(): HasMany
     {
         return $this->hasMany(CouponUsage::class);
+    }
+
+    protected static function booted()
+    {
+        static::deleting(function (Coupon $coupon) {
+            $coupon->usages()->delete();
+        });
     }
 }

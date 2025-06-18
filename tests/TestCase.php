@@ -20,7 +20,7 @@ use Noxo\FilamentCoupons\CouponsServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 
-final class TestCase extends Orchestra
+class TestCase extends Orchestra
 {
     protected function setUp(): void
     {
@@ -29,16 +29,18 @@ final class TestCase extends Orchestra
         Factory::guessFactoryNamesUsing(
             fn (string $modelName) => 'Noxo\\FilamentCoupons\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
+
+        $this->runMigrations();
     }
 
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
-
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_filament-coupons_table.php.stub';
-        $migration->up();
-        */
+        config()->set('database.connections.testing', [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ]);
     }
 
     protected function getPackageProviders($app)
@@ -58,5 +60,14 @@ final class TestCase extends Orchestra
             WidgetsServiceProvider::class,
             CouponsServiceProvider::class,
         ];
+    }
+
+    private function runMigrations(): void
+    {
+        $migration = include __DIR__.'/../database/migrations/2025_06_01_205833_create_coupons_table.php.stub';
+        $migration->up();
+
+        $migration = include __DIR__.'/../database/migrations/2025_06_01_205834_create_coupon_usages_table.php.stub';
+        $migration->up();
     }
 }
