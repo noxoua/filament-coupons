@@ -185,11 +185,13 @@ if (coupons()->isValid($coupon)) {
 
 ## Testing
 
-**TODO: add tests**
+Run the test suite using:
 
 ```bash
-# composer test
+composer test
 ```
+
+The tests verify all aspects of coupon functionality, including strategy handling and integration with Filament. We recommend running tests after any changes.
 
 ## Credits
 
