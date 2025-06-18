@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Noxo\FilamentCoupons\Tests\Security;
-
-use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Noxo\FilamentCoupons\Models\Coupon;
 use Noxo\FilamentCoupons\Models\CouponUsage;

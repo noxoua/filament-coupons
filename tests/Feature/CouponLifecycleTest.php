@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Noxo\FilamentCoupons\Tests\Feature;
-
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Noxo\FilamentCoupons\Models\Coupon;
@@ -130,7 +128,7 @@ describe('Coupon Lifecycle', function () {
         ]);
 
         // Create a mock user model
-        $user = new class extends \Illuminate\Database\Eloquent\Model
+        $user = new class extends Illuminate\Database\Eloquent\Model
         {
             protected $table = 'users';
 

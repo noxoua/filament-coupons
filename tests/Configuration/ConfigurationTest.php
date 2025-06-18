@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Noxo\FilamentCoupons\Tests\Configuration;
-
 use Illuminate\Support\Facades\Config;
 use Noxo\FilamentCoupons\Resources\CouponResource;
 use Noxo\FilamentCoupons\Strategies\CouponStrategy;

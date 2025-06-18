@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Noxo\FilamentCoupons\Tests\Performance;
-
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Noxo\FilamentCoupons\Models\Coupon;
 use Noxo\FilamentCoupons\Models\CouponUsage;
@@ -113,7 +111,7 @@ describe('Performance Tests', function () {
         // Create multiple strategies
         $strategies = [];
         for ($i = 0; $i < 10; $i++) {
-            $strategies[] = new class extends \Noxo\FilamentCoupons\Strategies\CouponStrategy
+            $strategies[] = new class extends Noxo\FilamentCoupons\Strategies\CouponStrategy
             {
                 private static $counter = 0;
 
@@ -141,7 +139,7 @@ describe('Performance Tests', function () {
     });
 
     it('maintains performance with complex payload schemas', function () {
-        $complexStrategy = new class extends \Noxo\FilamentCoupons\Strategies\CouponStrategy
+        $complexStrategy = new class extends Noxo\FilamentCoupons\Strategies\CouponStrategy
         {
             public function getName(): string
             {

@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Noxo\FilamentCoupons\Tests\Integration;
-
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;

@@ -136,8 +136,8 @@ describe('Package Structure Tests', function () {
 
         expect($composer)->toHaveKey('scripts');
         expect($composer['scripts'])->toHaveKey('test');
-        expect($composer['scripts'])->toHaveKey('test-coverage');
-        expect($composer['scripts'])->toHaveKey('analyse');
+        expect($composer['scripts'])->toHaveKey('test:unit');
+        expect($composer['scripts'])->toHaveKey('test:lint');
     });
 });
 

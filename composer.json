@@ -52,11 +52,20 @@
         }
     },
     "scripts": {
-        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
-        "analyse": "vendor/bin/phpstan analyse",
-        "test": "vendor/bin/pest",
-        "test-coverage": "vendor/bin/pest --coverage",
-        "format": "vendor/bin/pint"
+        "lint": [
+            "rector",
+            "pint"
+        ],
+        "test:lint": [
+            "pint --test"
+        ],
+        "test:unit": "pest --parallel",
+        "test:types": "phpstan",
+        "test": [
+            "@test:lint",
+            "@test:unit",
+            "@test:types"
+        ]
     },
     "config": {
         "sort-packages": true,

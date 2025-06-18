@@ -2,15 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Noxo\FilamentCoupons\Tests\EdgeCases;
-
 use Carbon\Carbon;
-use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Noxo\FilamentCoupons\Models\Coupon;
 use Noxo\FilamentCoupons\Strategies\CouponStrategy;
-use stdClass;
 
 uses(RefreshDatabase::class);
 
@@ -327,7 +323,7 @@ describe('Strategy Edge Cases', function () {
 describe('Database Edge Cases', function () {
     it('handles coupon with missing required relationships', function () {
         // Create coupon usage without proper coupon relationship
-        $usage = new \Noxo\FilamentCoupons\Models\CouponUsage([
+        $usage = new Noxo\FilamentCoupons\Models\CouponUsage([
             'coupon_id' => 99999, // Non-existent coupon
         ]);
 
