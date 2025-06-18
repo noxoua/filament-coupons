@@ -1,6 +1,5 @@
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="art/header-dark.png">
-    <img alt="Filament Coupons" src="art/header-light.png">
+    <img alt="Filament Coupons" src="art/header.jpg">
 </picture>
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/noxoua/filament-coupons.svg?style=flat-square)](https://packagist.org/packages/noxoua/filament-coupons)
