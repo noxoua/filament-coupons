@@ -1,6 +1,5 @@
-<picture>
-    <img alt="Filament Coupons" src="art/header.jpg">
-</picture>
+![Header](https://raw.githubusercontent.com/noxoua/filament-coupons/main/art/header.jpg)
+
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/noxoua/filament-coupons.svg?style=flat-square)](https://packagist.org/packages/noxoua/filament-coupons)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/noxoua/filament-coupons/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/noxoua/filament-coupons/actions?query=workflow%3Arun-tests+branch%3Amain)
